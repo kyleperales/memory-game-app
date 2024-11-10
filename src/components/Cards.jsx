@@ -14,6 +14,8 @@ function Card({ pokemonName, imageUrl, onClickHandler }) {
 function Cards({ onCardSelect, onGameReset }) {
     const [selectedIndex, setSelectedIndex] = useState(null)
     const [pokemonMap, setPokemonMap] = useState({})
+    const [showLoading, setShowLoading] = useState(true)
+
     const pokemons = [
         "charmander",
         "charmeleon",
@@ -30,8 +32,8 @@ function Cards({ onCardSelect, onGameReset }) {
     ]
     
     let url = ''
-    useEffect(() => {
-        const fetchPokemon = async (pokemon) => {
+    useEffect(() => {        
+        pokemons.forEach(async (pokemon, index) => {
             url =  `https://pokeapi.co/api/v2/pokemon/${pokemon}`
             try {
                 const response = await fetch(url)
@@ -40,6 +42,7 @@ function Cards({ onCardSelect, onGameReset }) {
                 }
     
                 const data = await response.json()
+                
 
                 setPokemonMap((prev) => {
                     return {
@@ -47,13 +50,13 @@ function Cards({ onCardSelect, onGameReset }) {
                         [pokemon]: data.sprites.other["official-artwork"].front_default
                     }
                 })
+
+                if (index === pokemons.length - 1) {
+                    setShowLoading(false)
+                }
             } catch (error) {
                 console.error('Error:', error)
             }
-        }
-        
-        pokemons.forEach(pokemon => {
-            fetchPokemon(pokemon)
         })
     }, [url])
         
@@ -69,24 +72,29 @@ function Cards({ onCardSelect, onGameReset }) {
         onCardSelect()
     }
 
-    return (
-        <div>
-            <div className='cards-container'>
-                {
-                    Object.keys(pokemonMap)
-                        .sort(() => Math.random() - 0.5)
-                        .map((pokemonKey, index) => {
-                            return (
-                                <Card key={pokemonKey}
-                                    pokemonName={pokemonKey}
-                                    imageUrl={pokemonMap[pokemonKey]}
-                                    onClickHandler={() => onClickHandler(pokemonKey)}/>
-                            )
-                        })
-                }
+
+    if (showLoading) {
+        return <h1>Loading...</h1>
+    } else {
+        return (
+            <div>
+                <div className='cards-container'>
+                    {
+                        Object.keys(pokemonMap)
+                            .sort(() => Math.random() - 0.5)
+                            .map((pokemonKey, index) => {
+                                return (
+                                    <Card key={pokemonKey}
+                                        pokemonName={pokemonKey}
+                                        imageUrl={pokemonMap[pokemonKey]}
+                                        onClickHandler={() => onClickHandler(pokemonKey)}/>
+                                )
+                            })
+                    }
+                </div>
             </div>
-        </div>
-    )
+        ) 
+    }
 }
 
 export default Cards
