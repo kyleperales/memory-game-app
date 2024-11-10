@@ -1,50 +1,6 @@
-import { useState } from "react"
-
-function Score({ currentScore, bestScore }) {
-    return (
-        <div>
-            <h1>Score: {currentScore}</h1>            
-            <h1>Best Score: {bestScore}</h1>
-        </div>
-    )
-}
-
-function Cards({ onCardSelect, onGameReset }) {
-    const [selectedIndex, setSelectedIndex] = useState(null)
-
-    const cards = ['Card 1', 'Card 2', 'Card 3', 'Card 4']
-
-    const onClickHandler = (index) => {
-        if (selectedIndex === index) {
-            setSelectedIndex(null)
-            onGameReset()
-            return
-        }
-        
-        setSelectedIndex(index)
-        onCardSelect()
-    }
-
-    return (
-        <div>
-            <h1>Memory Game</h1>
-            <div>
-                {
-                    cards
-                        .sort(() => Math.random() - 0.5)
-                        .map((card, index) => {
-                            return (
-                                <div key={index} onClick={() => onClickHandler(index)}>
-                                    <h2>{card}</h2>
-                                </div>
-                                
-                            )
-                        })
-                }
-            </div>
-        </div>
-    )
-}
+import { useState } from 'react'
+import Cards from './Cards'
+import Score from './Score'
 
 function MemoryGame() {
     const [score, setScore] = useState(0)
