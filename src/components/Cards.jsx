@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import './../styles/Cards.css'
 
 function Card({ pokemonName, imageUrl, onClickHandler }) {
     return (
-        <div onClick={onClickHandler}>
+        <div className='card' onClick={onClickHandler}>
           {imageUrl && <img src={imageUrl} alt={pokemonName}/>}
           <span>{pokemonName}</span>  
         </div>
@@ -71,8 +71,7 @@ function Cards({ onCardSelect, onGameReset }) {
 
     return (
         <div>
-            <h1>Memory Game</h1>
-            <div>
+            <div className='cards-container'>
                 {
                     Object.keys(pokemonMap)
                         .sort(() => Math.random() - 0.5)

@@ -25,6 +25,7 @@ function MemoryGame() {
 
     return (
         <>
+            <h1>Memory Game</h1>    
             <Score currentScore={score} bestScore={bestScore}/>
             <Cards onCardSelect={onCardSelect} onGameReset={onGameReset}/>
         </>

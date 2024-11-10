@@ -1,8 +1,10 @@
+import './../styles/Score.css'
+
 function Score({ currentScore, bestScore }) {
     return (
-        <div>
-            <h1>Score: {currentScore}</h1>            
-            <h1>Best Score: {bestScore}</h1>
+        <div className='score-container'>
+            <h2>Score: {currentScore}</h2>            
+            <h2>Best Score: {bestScore}</h2>
         </div>
     )
 }
