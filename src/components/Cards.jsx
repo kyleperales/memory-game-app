@@ -78,10 +78,10 @@ function Cards({ onCardSelect, onGameReset }) {
                         .sort(() => Math.random() - 0.5)
                         .map((pokemonKey, index) => {
                             return (
-                                <Card key={index}
+                                <Card key={pokemonKey}
                                     pokemonName={pokemonKey}
                                     imageUrl={pokemonMap[pokemonKey]}
-                                    onClickHandler={() => onClickHandler(index)}/>
+                                    onClickHandler={() => onClickHandler(pokemonKey)}/>
                             )
                         })
                 }
